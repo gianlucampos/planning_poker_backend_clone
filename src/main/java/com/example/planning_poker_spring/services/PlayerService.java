@@ -1,7 +1,7 @@
 package com.example.planning_poker_spring.services;
 
 import com.example.planning_poker_spring.models.Player;
-import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,16 +17,16 @@ public class PlayerService {
         listPlayers().forEach(player -> restTemplate.postForEntity(BASE_URL, player, Void.class));
     }
 
-    private List<Player> listPlayers() {
-        return List.of(
+    public Set<Player> listPlayers() {
+        return Set.of(
             new Player("Gianluca", "PP"),
             new Player("Victor", "PP"),
             new Player("Lucas", "PP"),
-            new Player("Ricardo", "PP"),
-            new Player("Bruno", "PP"),
-            new Player("Bruna", "PP"),
-            new Player("Renata", "PP"),
-            new Player("Geovanni", "PP")
+            new Player("Ricardo", "P"),
+            new Player("Bruno", "P"),
+            new Player("Bruna", "P"),
+            new Player("Renata", "M"),
+            new Player("Geovanni", "M")
         );
     }
 

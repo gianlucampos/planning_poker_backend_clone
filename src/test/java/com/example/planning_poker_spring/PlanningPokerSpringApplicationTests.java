@@ -15,7 +15,7 @@ public class PlanningPokerSpringApplicationTests {
     void setUp() {
         player = new Player();
         player.setName("Gianluca");
-        player.setVoto("PP");
+        player.setVote("PP");
 
         player2 = new Player();
         player2.setName("Ricardo");
@@ -36,7 +36,7 @@ public class PlanningPokerSpringApplicationTests {
     public void testChangeVote() {
         System.out.println(players);
         var playa = players.stream().filter(p -> p.getName().equals("Gianluca")).findFirst().orElseThrow();
-        playa.setVoto("P");
+        playa.setVote("P");
         System.out.println(players);
     }
 }

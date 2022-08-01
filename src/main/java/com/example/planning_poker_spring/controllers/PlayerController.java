@@ -39,7 +39,7 @@ public class PlayerController {
     }
 
     @PutMapping("/vote")
-    public ResponseEntity<?> vote(@RequestBody Player player) {
+    public ResponseEntity<Void> vote(@RequestBody Player player) {
         players.stream()
             .filter(p -> p.getName().equalsIgnoreCase(player.getName()))
             .findAny()
