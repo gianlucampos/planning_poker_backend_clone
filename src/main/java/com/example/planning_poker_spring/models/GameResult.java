@@ -1,6 +1,5 @@
 package com.example.planning_poker_spring.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class GameResult {
 
-    private List<Vote> votes = new ArrayList<>();
+    private List<Vote> votes;
 
 }

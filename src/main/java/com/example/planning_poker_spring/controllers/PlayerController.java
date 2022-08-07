@@ -4,8 +4,9 @@ import com.example.planning_poker_spring.models.GameResult;
 import com.example.planning_poker_spring.models.Player;
 import com.example.planning_poker_spring.models.Vote;
 import com.example.planning_poker_spring.models.Vote.VoteEnum;
-import java.util.ArrayList;
+import com.example.planning_poker_spring.services.PlayerService;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,10 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 public class PlayerController {
 
-    private final List<Player> players = new ArrayList<>();
+    private final Set<Player> players;
+
+    public PlayerController(PlayerService service) {
+        players = service.listPlayers();
+    }
 
     @GetMapping
-    public ResponseEntity<List<Player>> listPlayers() {
+    public ResponseEntity<Set<Player>> listPlayers() {
         return ResponseEntity.ok(players);
     }
 
