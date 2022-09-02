@@ -1,6 +1,8 @@
 package com.example.planning_poker_spring.controllers;
 
+import com.example.planning_poker_spring.models.GameStatus;
 import com.example.planning_poker_spring.models.Player;
+import com.example.planning_poker_spring.services.GameService;
 import com.example.planning_poker_spring.services.PlayerService;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,12 +18,14 @@ public class SocketController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final Set<Player> connectedPlayers = new HashSet<>();
-    private final PlayerService service;
+    private final PlayerService playerService;
+    private final GameService gameService;
 
-    public SocketController(SimpMessagingTemplate simpMessagingTemplate, PlayerService service) {
+    public SocketController(SimpMessagingTemplate simpMessagingTemplate, PlayerService playerService, GameService gameService) {
         this.simpMessagingTemplate = simpMessagingTemplate;
-        this.service = service;
-        connectedPlayers.addAll(service.listPlayers());
+        this.playerService = playerService;
+        this.gameService = gameService;
+        connectedPlayers.addAll(playerService.listPlayers());
     }
 
     //Add o jogador
@@ -51,8 +55,20 @@ public class SocketController {
     //Reseta lista de jogadores
     @MessageMapping("/resetList")
     public void reset() {
-        connectedPlayers.addAll(service.listPlayers());
+        connectedPlayers.addAll(playerService.listPlayers());
         simpMessagingTemplate.convertAndSend("/topic/users", connectedPlayers);
+    }
+
+    @MessageMapping("/gameStatus")
+    public void getGameStatus() {
+        simpMessagingTemplate.convertAndSend("/topic/status", gameService.getGameStatus());
+    }
+
+    @MessageMapping("/gameStatus/change")
+    public void changeGameStatus(String status) {
+        GameStatus gameStatus = GameStatus.valueOf(status);
+        gameService.changeGameStatus(gameStatus);
+        simpMessagingTemplate.convertAndSend("/topic/status", gameService.getGameStatus());
     }
 
 }
